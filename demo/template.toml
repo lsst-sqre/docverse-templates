@@ -1,0 +1,24 @@
+# Demo dashboard template configuration.
+#
+# This template is intentionally distinct from Docverse's built-in default
+# so that pointing a Docverse deployment at this repository (path=demo)
+# produces a visibly different dashboard, confirming the GitHub-sourced
+# template fetch / sync / render path is working end-to-end.
+
+[dashboard]
+template = "dashboard.html.jinja"
+
+[dashboard.assets]
+css = ["dashboard.css"]
+js = ["dashboard.js"]
+images = ["logo.svg", "favicon.png"]
+
+[error_404]
+template = "404.html.jinja"
+
+[error_404.assets]
+css = ["dashboard.css"]
+images = ["logo.svg", "favicon.png"]
+
+[switcher]
+include_kinds = ["main", "release", "major", "alternate"]
