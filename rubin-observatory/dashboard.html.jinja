@@ -8,6 +8,10 @@
 <meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
 {% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
 {% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
+{# Source Sans 3 variable font (upright and italic, weights 200-900) from Google Fonts #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 {% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
 </head>
 <body>

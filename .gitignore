@@ -219,3 +219,6 @@ __marimo__/
 
 # Node
 node_modules/
+
+# Playwright MCP screenshots
+.playwright-mcp/
