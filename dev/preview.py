@@ -1,14 +1,15 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["jinja2>=3.1"]
+# dependencies = ["jinja2>=3.1", "watchfiles>=1.0"]
 # ///
 """Local preview server for Docverse template sets.
 
 Renders each template set's dashboard and 404 templates against the mock
 scenarios in ``dev/mocks/*.toml``, mirroring Docverse's asset inlining and
-edition grouping so the preview matches what Docverse publishes. Pages
-poll the server and reload when any template, asset, or mock changes.
+edition grouping so the preview matches what Docverse publishes. A file
+watcher pushes reload events to open pages over Server-Sent Events, so
+the browser reloads as soon as a template, asset, or mock changes.
 
 Run with ``npm run preview`` or ``uv run dev/preview.py``.
 """
@@ -18,8 +19,10 @@ from __future__ import annotations
 import argparse
 import base64
 import enum
+import queue
 import re
 import sys
+import threading
 import tomllib
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -30,6 +33,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from watchfiles import watch
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MOCKS_DIR = REPO_ROOT / "dev" / "mocks"
@@ -264,35 +268,57 @@ def render_page(set_dir: Path, page: str, scenario: Scenario) -> str:
 # HTTP server with live reload
 
 
-def watched_state() -> str:
-    """Fingerprint of every file the preview depends on."""
-    latest = 0.0
-    count = 0
-    roots = [*find_template_sets().values(), MOCKS_DIR, Path(__file__)]
-    for root in roots:
-        files = [root] if root.is_file() else root.rglob("*")
-        for f in files:
-            if f.is_file():
-                latest = max(latest, f.stat().st_mtime)
-                count += 1
-    return f"{latest:.6f}:{count}"
+class ReloadBroker:
+    """Fan out file-change notifications to connected SSE clients."""
+
+    def __init__(self) -> None:
+        self._subscribers: set[queue.SimpleQueue[str]] = set()
+        self._lock = threading.Lock()
+        self.stop_event = threading.Event()
+
+    def subscribe(self) -> queue.SimpleQueue[str]:
+        q: queue.SimpleQueue[str] = queue.SimpleQueue()
+        with self._lock:
+            self._subscribers.add(q)
+        return q
+
+    def unsubscribe(self, q: queue.SimpleQueue[str]) -> None:
+        with self._lock:
+            self._subscribers.discard(q)
+
+    def publish(self, message: str) -> None:
+        with self._lock:
+            subscribers = list(self._subscribers)
+        for q in subscribers:
+            q.put(message)
+
+    def watch_forever(self) -> None:
+        """Watch preview inputs and publish a reload on every change.
+
+        Runs in a daemon thread. Template sets added after startup are not
+        watched until the server restarts.
+        """
+        roots = [*find_template_sets().values(), MOCKS_DIR, Path(__file__)]
+        for changes in watch(*roots, stop_event=self.stop_event):
+            paths = sorted({Path(path).relative_to(REPO_ROOT).as_posix() for _, path in changes})
+            sys.stderr.write(f"changed: {', '.join(paths)}\n")
+            self.publish(paths[0])
+
+
+BROKER = ReloadBroker()
 
 
 LIVE_RELOAD_JS = """
 <script data-docverse-preview>
 (function () {
-  var current = null;
-  function poll() {
-    fetch("/__state", { cache: "no-store" })
-      .then(function (r) { return r.text(); })
-      .then(function (s) {
-        if (current === null) { current = s; }
-        else if (s !== current) { location.reload(); }
-      })
-      .catch(function () {})
-      .finally(function () { setTimeout(poll, 500); });
-  }
-  poll();
+  var source = new EventSource("/__events");
+  var lostConnection = false;
+  source.addEventListener("reload", function () { location.reload(); });
+  source.onerror = function () { lostConnection = true; };
+  source.onopen = function () {
+    // Reconnected after a server restart: the script itself may have changed.
+    if (lostConnection) { location.reload(); }
+  };
 })();
 </script>
 """
@@ -338,8 +364,32 @@ def error_page(status: HTTPStatus, message: str) -> str:
 
 class PreviewHandler(BaseHTTPRequestHandler):
     def log_message(self, fmt: str, *args: Any) -> None:  # quieter logging
-        if self.path != "/__state":
+        if self.path != "/__events":
             sys.stderr.write(f"{self.address_string()} {fmt % args}\n")
+
+    def _serve_events(self) -> None:
+        """Hold an SSE connection open and push reload events."""
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Connection", "keep-alive")
+        self.end_headers()
+        q = BROKER.subscribe()
+        try:
+            self.wfile.write(b"retry: 1000\n\n")
+            self.wfile.flush()
+            while True:
+                try:
+                    changed = q.get(timeout=15)
+                except queue.Empty:
+                    self.wfile.write(b": keep-alive\n\n")  # comment line, ignored by clients
+                else:
+                    self.wfile.write(f"event: reload\ndata: {changed}\n\n".encode())
+                self.wfile.flush()
+        except (BrokenPipeError, ConnectionResetError):
+            pass  # client navigated away or reloaded
+        finally:
+            BROKER.unsubscribe(q)
 
     def _send(self, status: HTTPStatus, body: str, content_type: str = "text/html; charset=utf-8") -> None:
         data = body.encode()
@@ -352,8 +402,8 @@ class PreviewHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         path = self.path.split("?", 1)[0]
-        if path == "/__state":
-            self._send(HTTPStatus.OK, watched_state(), "text/plain")
+        if path == "/__events":
+            self._serve_events()
             return
         try:
             sets = find_template_sets()
@@ -389,11 +439,16 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8790)
     args = parser.parse_args()
     server = ThreadingHTTPServer((args.host, args.port), PreviewHandler)
+    server.daemon_threads = True  # don't wait on open SSE connections at exit
+    threading.Thread(target=BROKER.watch_forever, name="watcher", daemon=True).start()
     print(f"Docverse template preview: http://{args.host}:{args.port}/")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         pass
+    finally:
+        BROKER.stop_event.set()
+        server.server_close()
 
 
 if __name__ == "__main__":

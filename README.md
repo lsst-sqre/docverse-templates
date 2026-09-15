@@ -25,7 +25,7 @@ npm run preview
 
 Then open <http://127.0.0.1:8790/>.
 The index links to the dashboard and 404 page for each template set and each mock scenario.
-Pages reload automatically when a template, asset, or mock file changes, and render errors are shown in the browser.
+A file watcher pushes reload events to open pages over Server-Sent Events, so the browser reloads as soon as a template, asset, or mock file changes. Render errors are shown in the browser.
 
 Mock scenarios live in `dev/mocks/*.toml`, one file per project shape:
 
