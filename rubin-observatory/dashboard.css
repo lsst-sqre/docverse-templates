@@ -46,7 +46,7 @@ a:hover {
   width: auto;
 }
 
-.site-header__text .org {
+.site-header__text .kicker {
   margin: 0;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -58,11 +58,6 @@ h1 {
   margin: 0;
   font-size: 1.75rem;
   color: var(--rsd-component-text-headline-color);
-}
-
-.site-header__text .source {
-  margin: 0.25rem 0 0;
-  font-size: 0.9rem;
 }
 
 section {
