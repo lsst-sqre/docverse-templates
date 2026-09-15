@@ -25,15 +25,23 @@
 </header>
 
 <main>
+{# One edition entry: linked title plus a muted "updated" timestamp.
+   The server renders an ISO date; dashboard.js humanizes it ("2 hours ago")
+   and the full ISO 8601 timestamp is shown on hover via the title attribute. #}
+{% macro edition_item(edition) -%}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a>
+      {%- set iso = edition.date_updated.isoformat() %}
+      <time class="updated" datetime="{{ iso }}" title="{{ iso }}">{{ edition.date_updated.strftime('%Y-%m-%d') }}</time></li>
+{%- endmacro %}
 {% if editions.main or editions.alternates %}
 <section id="main-edition">
   <h2>Current</h2>
   <ul>
   {% if editions.main %}
-    <li><a href="{{ editions.main.published_url }}">{{ editions.main.title }}</a></li>
+    {{ edition_item(editions.main) }}
   {% endif %}
   {% for edition in editions.alternates %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+    {{ edition_item(edition) }}
   {% endfor %}
   </ul>
 </section>
@@ -44,7 +52,7 @@
   <h2>Releases</h2>
   <ul>
   {% for edition in editions.releases %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+    {{ edition_item(edition) }}
   {% endfor %}
   </ul>
 </section>
@@ -55,7 +63,7 @@
   <h2>Major versions</h2>
   <ul>
   {% for edition in editions.major %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+    {{ edition_item(edition) }}
   {% endfor %}
   </ul>
 </section>
@@ -66,7 +74,7 @@
   <h2>Minor versions</h2>
   <ul>
   {% for edition in editions.minor %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+    {{ edition_item(edition) }}
   {% endfor %}
   </ul>
 </section>
@@ -77,7 +85,7 @@
   <h2>Drafts</h2>
   <ul>
   {% for edition in editions.drafts %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+    {{ edition_item(edition) }}
   {% endfor %}
   </ul>
 </section>
