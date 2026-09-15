@@ -1,0 +1,68 @@
+# Scenario 4: a project like rsp.lsst.io with a main edition for the
+# public Rubin Science Platform, alternate editions for other RSP
+# deployments, and draft branch editions.
+title = "Main, alternates, and drafts (rsp)"
+
+[org]
+slug = "rubin"
+title = "Rubin Observatory"
+base_domain = "lsst.io"
+
+[project]
+slug = "rsp"
+title = "Rubin Science Platform"
+source_repo_url = "https://github.com/lsst-sqre/rsp_lsst_io"
+published_url = "https://rsp.lsst.io/"
+
+[[editions]]
+slug = "__main"
+title = "data.lsst.cloud"
+kind = "main"
+date_updated = 2026-09-13T20:00:00Z
+build = { git_ref = "main", date = 2026-09-13T19:59:02Z }
+
+[[editions]]
+slug = "usdf"
+title = "USDF RSP"
+kind = "alternate"
+alternate_name = "usdf"
+date_updated = 2026-09-13T20:00:00Z
+build = { git_ref = "main", date = 2026-09-13T19:59:02Z }
+
+[[editions]]
+slug = "usdf-dev"
+title = "USDF dev RSP"
+kind = "alternate"
+alternate_name = "usdf-dev"
+date_updated = 2026-09-13T20:00:00Z
+build = { git_ref = "main", date = 2026-09-13T19:59:02Z }
+
+[[editions]]
+slug = "summit"
+title = "Summit RSP"
+kind = "alternate"
+alternate_name = "summit"
+date_updated = 2026-09-13T20:00:00Z
+build = { git_ref = "main", date = 2026-09-13T19:59:02Z }
+
+[[editions]]
+slug = "base"
+title = "Base facility RSP"
+kind = "alternate"
+alternate_name = "base"
+date_updated = 2026-09-13T20:00:00Z
+build = { git_ref = "main", date = 2026-09-13T19:59:02Z }
+
+[[editions]]
+slug = "tickets-DM-56100"
+title = "tickets/DM-56100"
+kind = "draft"
+date_updated = 2026-09-15T11:20:00Z
+build = { git_ref = "tickets/DM-56100", date = 2026-09-15T11:19:41Z }
+
+[[editions]]
+slug = "u-frossie-portal-tutorial"
+title = "u/frossie/portal-tutorial"
+kind = "draft"
+date_updated = 2026-09-09T15:45:00Z
+build = { git_ref = "u/frossie/portal-tutorial", date = 2026-09-09T15:44:20Z }

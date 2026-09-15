@@ -1,0 +1,70 @@
+# Scenario 3: a library like safir.lsst.io with a main edition, semantic
+# version releases, and some draft editions.
+title = "Main, releases, and drafts (safir)"
+
+[org]
+slug = "rubin"
+title = "Rubin Observatory"
+base_domain = "lsst.io"
+
+[project]
+slug = "safir"
+title = "Safir"
+source_repo_url = "https://github.com/lsst-sqre/safir"
+published_url = "https://safir.lsst.io/"
+
+[[editions]]
+slug = "__main"
+title = "Current"
+kind = "main"
+date_updated = 2026-09-11T14:00:00Z
+build = { git_ref = "main", date = 2026-09-11T13:59:20Z }
+
+[[editions]]
+slug = "v13.2.0"
+title = "13.2.0"
+kind = "release"
+date_updated = 2026-09-02T17:30:00Z
+build = { git_ref = "13.2.0", date = 2026-09-02T17:29:41Z }
+
+[[editions]]
+slug = "v13.1.0"
+title = "13.1.0"
+kind = "release"
+date_updated = 2026-08-12T15:10:00Z
+build = { git_ref = "13.1.0", date = 2026-08-12T15:09:12Z }
+
+[[editions]]
+slug = "v13.0.0"
+title = "13.0.0"
+kind = "release"
+date_updated = 2026-07-21T19:45:00Z
+build = { git_ref = "13.0.0", date = 2026-07-21T19:44:05Z }
+
+[[editions]]
+slug = "v12.4.1"
+title = "12.4.1"
+kind = "release"
+date_updated = 2026-06-05T12:00:00Z
+build = { git_ref = "12.4.1", date = 2026-06-05T11:59:30Z }
+
+[[editions]]
+slug = "v12.4.0"
+title = "12.4.0"
+kind = "release"
+date_updated = 2026-05-28T12:00:00Z
+build = { git_ref = "12.4.0", date = 2026-05-28T11:58:00Z }
+
+[[editions]]
+slug = "tickets-DM-56020"
+title = "tickets/DM-56020"
+kind = "draft"
+date_updated = 2026-09-14T22:10:00Z
+build = { git_ref = "tickets/DM-56020", date = 2026-09-14T22:09:33Z }
+
+[[editions]]
+slug = "tickets-DM-55772"
+title = "tickets/DM-55772"
+kind = "draft"
+date_updated = 2026-09-08T10:05:00Z
+build = { git_ref = "tickets/DM-55772", date = 2026-09-08T10:04:12Z }

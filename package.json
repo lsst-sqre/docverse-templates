@@ -6,7 +6,8 @@
   "repository": "https://github.com/lsst-sqre/docverse-templates",
   "scripts": {
     "build": "node scripts/build.js",
-    "check": "node scripts/build.js --check"
+    "check": "node scripts/build.js --check",
+    "preview": "uv run dev/preview.py"
   },
   "dependencies": {
     "@lsst-sqre/rubin-style-dictionary": "^0.8.0"

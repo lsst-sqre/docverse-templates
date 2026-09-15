@@ -1,0 +1,20 @@
+# Scenario 1: a project with only a main edition.
+title = "Main edition only"
+
+[org]
+slug = "rubin"
+title = "Rubin Observatory"
+base_domain = "lsst.io"
+
+[project]
+slug = "sqr-112"
+title = "SQR-112: Docverse design"
+source_repo_url = "https://github.com/lsst-sqre/sqr-112"
+published_url = "https://sqr-112.lsst.io/"
+
+[[editions]]
+slug = "__main"
+title = "Current"
+kind = "main"
+date_updated = 2026-09-10T15:04:00Z
+build = { git_ref = "main", date = 2026-09-10T15:03:12Z }

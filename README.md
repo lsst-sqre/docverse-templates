@@ -14,6 +14,31 @@ A set contains a `template.toml` that declares the dashboard and 404 templates a
 | `rubin-observatory/` | Rubin Observatory visual identity, built on the Rubin Style Dictionary design tokens. |
 | `demo/` | Deliberately distinct demo set for verifying the GitHub template sync path end-to-end. |
 
+## Previewing templates locally
+
+A small preview server renders every template set against mock project data with live reload.
+It needs [uv](https://docs.astral.sh/uv/) (dependencies are declared inline in the script):
+
+```
+npm run preview
+```
+
+Then open <http://127.0.0.1:8790/>.
+The index links to the dashboard and 404 page for each template set and each mock scenario.
+Pages reload automatically when a template, asset, or mock file changes, and render errors are shown in the browser.
+
+Mock scenarios live in `dev/mocks/*.toml`, one file per project shape:
+
+| Scenario | Models |
+| --- | --- |
+| `main-only` | A project with only a main edition. |
+| `phalanx` | Main edition plus draft editions from ticket branches. |
+| `safir` | Main edition, semantic version releases, and drafts. |
+| `rsp` | Main edition, alternate deployments, and drafts. |
+
+Add a new `.toml` file to `dev/mocks/` to add a scenario; the server picks it up without a restart.
+The preview mirrors Docverse's edition grouping and asset inlining (see `dev/preview.py`), but the authoritative behaviour is in [Docverse](https://github.com/lsst-sqre/docverse) itself.
+
 ## Rubin Style Dictionary
 
 The `rubin-observatory` set gets its colours and brand assets (imagotype, favicon) from [`@lsst-sqre/rubin-style-dictionary`](https://github.com/lsst-sqre/squareone/tree/main/packages/rubin-style-dictionary), published to GitHub Packages.
