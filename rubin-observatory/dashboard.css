@@ -38,7 +38,6 @@ a:hover {
   gap: 1rem;
   padding: 1.5rem 0 1rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--rsd-component-divider-color);
 }
 
 .site-header .logo svg {
@@ -72,8 +71,7 @@ section {
 
 section h2 {
   font-size: 1.1rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid var(--rsd-component-divider-color);
+  margin-bottom: 0.25rem;
   color: var(--rsd-component-text-headline-color);
 }
 
