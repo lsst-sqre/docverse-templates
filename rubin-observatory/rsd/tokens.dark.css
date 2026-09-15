@@ -1,0 +1,16 @@
+body.dark, [data-theme='dark'] body {
+  --rsd-component-divider-color: #313536; /* Border/divider color in dark theme */
+  --rsd-component-footer-background-color: #0c4a47;
+  --rsd-component-header-nav-menulist-text-color: #ffffff;
+  --rsd-component-header-nav-menulist-background-color: #058b8c;
+  --rsd-component-header-nav-menulist-selected-background-color: #0c4a47;
+  --rsd-component-page-background-color: #1f2121; /* Page background color in dark theme */
+  --rsd-component-service-card-background-color: #1f2121;
+  --rsd-component-service-card-text-color: #dce0e3;
+  --rsd-component-surface-secondary-background-color: #313536; /* Subtle surface background color in dark theme */
+  --rsd-component-text-color: #dce0e3; /* Body text color in dark theme */
+  --rsd-component-text-secondary-color: #9da5a7; /* Muted/secondary text color in dark theme */
+  --rsd-component-text-link-color: #7bcfe8;
+  --rsd-component-text-link-hover-color: #146685;
+  --rsd-component-text-headline-color: #058b8c;
+}

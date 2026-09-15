@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ project.title }} &mdash; {{ org.title }}</title>
+<meta name="generator" content="docverse {{ docverse.version }}">
+<meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+{% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
+{% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
+{% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
+</head>
+<body>
+<header class="site-header">
+  {% set logo = assets.images.get('rubin_imagotype_color_on_white_crop_svg') %}
+  {% if logo %}<span class="logo">{{ logo|safe }}</span>{% endif %}
+  <div class="site-header__text">
+    <p class="org">{{ org.title }}</p>
+    <h1>{{ project.title }}</h1>
+    {% if project.source_repo_url %}
+    <p class="source"><a href="{{ project.source_repo_url }}">Source repository</a></p>
+    {% endif %}
+  </div>
+</header>
+
+<main>
+{% if editions.main %}
+<section id="main-edition">
+  <h2>Current</h2>
+  <ul>
+    <li><a href="{{ editions.main.published_url }}">{{ editions.main.title }}</a></li>
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.releases %}
+<section id="releases">
+  <h2>Releases</h2>
+  <ul>
+  {% for edition in editions.releases %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.major %}
+<section id="major-versions">
+  <h2>Major versions</h2>
+  <ul>
+  {% for edition in editions.major %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.minor %}
+<section id="minor-versions">
+  <h2>Minor versions</h2>
+  <ul>
+  {% for edition in editions.minor %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.drafts %}
+<section id="drafts">
+  <h2>Drafts</h2>
+  <ul>
+  {% for edition in editions.drafts %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.alternates %}
+<section id="alternates">
+  <h2>Alternate deployments</h2>
+  <ul>
+  {% for edition in editions.alternates %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+</main>
+
+<footer class="site-footer">
+  <p>Hosted by <a href="https://github.com/lsst-sqre/docverse">Docverse</a> for {{ org.title }}.</p>
+</footer>
+
+{% if assets.js %}<script>{{ assets.js|safe }}</script>{% endif %}
+</body>
+</html>

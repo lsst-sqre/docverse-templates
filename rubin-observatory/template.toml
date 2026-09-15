@@ -1,0 +1,29 @@
+# Rubin Observatory dashboard template configuration.
+#
+# Design tokens and brand assets under rsd/ are copied from
+# @lsst-sqre/rubin-style-dictionary by `npm run build` (see scripts/build.js).
+# Do not edit files in rsd/ by hand.
+
+[dashboard]
+template = "dashboard.html.jinja"
+
+[dashboard.assets]
+css = ["rsd/tokens.css", "rsd/tokens.dark.css", "dashboard.css"]
+js = ["dashboard.js"]
+images = [
+  "rsd/rubin-imagotype-color-on-white-crop.svg",
+  "rsd/rubin-favicon-transparent-32px.png",
+]
+
+[error_404]
+template = "404.html.jinja"
+
+[error_404.assets]
+css = ["rsd/tokens.css", "rsd/tokens.dark.css", "dashboard.css"]
+images = [
+  "rsd/rubin-imagotype-color-on-white-crop.svg",
+  "rsd/rubin-favicon-transparent-32px.png",
+]
+
+[switcher]
+include_kinds = ["main", "release", "major", "alternate"]

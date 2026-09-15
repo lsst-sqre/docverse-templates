@@ -1,0 +1,85 @@
+/* Rubin Observatory Docverse dashboard styles.
+ *
+ * Colours come from the Rubin Style Dictionary design tokens (rsd/tokens.css),
+ * which Docverse concatenates ahead of this file.
+ */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  max-width: 48rem;
+  color: var(--rsd-component-text-color);
+  background: var(--rsd-component-page-background-color);
+  border-top: 6px solid var(--rsd-color-primary-600);
+}
+
+a {
+  color: var(--rsd-component-text-link-color);
+}
+
+a:hover {
+  color: var(--rsd-component-text-link-hover-color);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rsd-component-divider-color);
+}
+
+.site-header .logo svg {
+  display: block;
+  height: 3.5rem;
+  width: auto;
+}
+
+.site-header__text .org {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: var(--rsd-component-text-headline-color);
+}
+
+.site-header__text .source {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+}
+
+section {
+  margin-top: 1.5rem;
+}
+
+section h2 {
+  font-size: 1.1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--rsd-component-divider-color);
+  color: var(--rsd-component-text-headline-color);
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rsd-component-divider-color);
+  font-size: 0.85rem;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.error-page main {
+  margin-top: 1rem;
+}

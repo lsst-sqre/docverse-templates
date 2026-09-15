@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found &mdash; {{ project.title }}</title>
+<meta name="generator" content="docverse {{ docverse.version }}">
+<meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+{% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
+{% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
+{% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
+</head>
+<body class="error-page">
+<header class="site-header">
+  {% set logo = assets.images.get('rubin_imagotype_color_on_white_crop_svg') %}
+  {% if logo %}<span class="logo">{{ logo|safe }}</span>{% endif %}
+  <div class="site-header__text">
+    <p class="org">{{ org.title }}</p>
+    <h1>Page not found</h1>
+  </div>
+</header>
+
+<main>
+<p>The page you requested doesn&rsquo;t exist in <strong>{{ project.title }}</strong>.</p>
+<p><a href="{{ project.published_url }}v/">Browse all editions of {{ project.title }}</a></p>
+</main>
+</body>
+</html>
