@@ -28,11 +28,16 @@
 </header>
 
 <main>
-{% if editions.main %}
+{% if editions.main or editions.alternates %}
 <section id="main-edition">
   <h2>Current</h2>
   <ul>
+  {% if editions.main %}
     <li><a href="{{ editions.main.published_url }}">{{ editions.main.title }}</a></li>
+  {% endif %}
+  {% for edition in editions.alternates %}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
+  {% endfor %}
   </ul>
 </section>
 {% endif %}
@@ -75,17 +80,6 @@
   <h2>Drafts</h2>
   <ul>
   {% for edition in editions.drafts %}
-    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
-  {% endfor %}
-  </ul>
-</section>
-{% endif %}
-
-{% if editions.alternates %}
-<section id="alternates">
-  <h2>Alternate deployments</h2>
-  <ul>
-  {% for edition in editions.alternates %}
     <li><a href="{{ edition.published_url }}">{{ edition.title }}</a></li>
   {% endfor %}
   </ul>
