@@ -16,7 +16,8 @@
  * component tokens fall short of WCAG AA against the dark page background
  * (#1f2121): the headline teal (primary-600, 3.9:1) and the link hover blue
  * (blue-600-ish #146685, 2.5:1). Re-point them at lighter shades from the
- * same palette until the tokens are fixed upstream. This block follows
+ * same palette until the tokens are fixed upstream
+ * (https://github.com/lsst-sqre/squareone/issues/708). This block follows
  * rsd/tokens.dark-scheme.css in the concatenated stylesheet, so it wins. */
 @media (prefers-color-scheme: dark) {
   body {
