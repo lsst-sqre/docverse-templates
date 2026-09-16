@@ -1,9 +1,16 @@
 /* Rubin Observatory Docverse dashboard styles.
  *
- * Colours come from the Rubin Style Dictionary design tokens (rsd/tokens.css),
- * which Docverse concatenates ahead of this file. The Source Sans 3 variable
- * font is loaded from Google Fonts by the templates.
+ * Colours come from the Rubin Style Dictionary design tokens, which Docverse
+ * concatenates ahead of this file: rsd/tokens.css for the light palette and
+ * rsd/tokens.dark-scheme.css, which re-declares the component tokens under a
+ * prefers-color-scheme media query. The page follows the system preference
+ * only; there is no user toggle. The Source Sans 3 variable font is loaded
+ * from Google Fonts by the templates.
  */
+
+:root {
+  color-scheme: light dark;
+}
 
 body {
   font-family:
@@ -186,11 +193,12 @@ li {
 }
 
 /* The partner logo lineup is only available as a dark-on-transparent PNG;
- * invert it to white-on-transparent in dark mode (the same selectors the
- * RSD dark tokens key off). */
-body.dark .rubin-footer__partner-logos img,
-[data-theme='dark'] body .rubin-footer__partner-logos img {
-  filter: invert(100%);
+ * invert it to white-on-transparent in dark mode, as Squareone and the
+ * documenteer theme do. */
+@media (prefers-color-scheme: dark) {
+  .rubin-footer__partner-logos img {
+    filter: invert(100%);
+  }
 }
 
 .error-page main {

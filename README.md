@@ -45,6 +45,8 @@ The `rubin-observatory` set gets its colours and brand assets (imagotype, favico
 Because Docverse fetches template sets straight from this repository, the token CSS and assets are copied into `rubin-observatory/rsd/` and committed.
 Never edit files in `rsd/` by hand.
 
+Most files are straight copies. `tokens.dark-scheme.css` is derived: the package's dark tokens key off a `body.dark` class or `data-theme` attribute (a user toggle), whereas the dashboards follow the system colour-scheme preference only, so `scripts/build.js` rewrites that file to apply under a `prefers-color-scheme: dark` media query.
+
 ### Set up
 
 The package lives on GitHub Packages, so npm needs a token with `read:packages` scope.

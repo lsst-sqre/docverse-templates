@@ -8,7 +8,7 @@
 template = "dashboard.html.jinja"
 
 [dashboard.assets]
-css = ["rsd/tokens.css", "rsd/tokens.dark.css", "dashboard.css"]
+css = ["rsd/tokens.css", "rsd/tokens.dark-scheme.css", "dashboard.css"]
 js = ["dashboard.js"]
 images = [
   "rsd/rubin-favicon-transparent-32px.png",
@@ -19,7 +19,7 @@ images = [
 template = "404.html.jinja"
 
 [error_404.assets]
-css = ["rsd/tokens.css", "rsd/tokens.dark.css", "dashboard.css"]
+css = ["rsd/tokens.css", "rsd/tokens.dark-scheme.css", "dashboard.css"]
 images = [
   "rsd/rubin-favicon-transparent-32px.png",
 ]
