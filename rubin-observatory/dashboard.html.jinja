@@ -4,9 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
+{% set hostname = project.published_url.split('/')[2] %}
+{% set dashboard_url = project.published_url ~ 'v/' %}
+{% set description = 'Documentation editions of ' ~ project.title ~ ': current, release, and draft versions published at ' ~ hostname ~ '.' %}
 <title>{{ project.title }} &mdash; {{ org.title }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ dashboard_url }}">
 <meta name="generator" content="docverse {{ docverse.version }}">
 <meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+{# Mobile browser chrome follows the page background token in each scheme
+   (rsd component.page.background.color; meta tags cannot read CSS variables). #}
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f2121" media="(prefers-color-scheme: dark)">
+{# Link previews (Slack, Jira, social). #}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ org.title }}">
+<meta property="og:title" content="{{ project.title }} documentation editions">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ dashboard_url }}">
+<meta name="twitter:card" content="summary">
 {% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
 {% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
 {# Source Sans 3 variable font (upright and italic, weights 200-900) from Google Fonts #}
@@ -21,7 +37,6 @@
   <p class="kicker">Documentation editions</p>
   <h1>{{ project.title }}</h1>
   {# The site's hostname, linked to the default edition. #}
-  {% set hostname = project.published_url.split('/')[2] %}
   <p class="site-url"><a href="{{ project.published_url }}">{{ hostname }}</a></p>
   {# Jump links to the sections after Current, in page order. #}
   {% set jump_targets = [] %}

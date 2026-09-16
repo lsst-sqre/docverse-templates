@@ -4,9 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>Not found &mdash; {{ project.title }}</title>
+<title>Page not found &mdash; {{ project.title }}</title>
+<meta name="description" content="The requested page does not exist in the {{ project.title }} documentation.">
+{# Served for every missing path; never worth indexing even if a path
+   answers with a 200. #}
+<meta name="robots" content="noindex">
 <meta name="generator" content="docverse {{ docverse.version }}">
 <meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f2121" media="(prefers-color-scheme: dark)">
 {% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
 {% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
 {# Source Sans 3 variable font (upright and italic, weights 200-900) from Google Fonts #}
