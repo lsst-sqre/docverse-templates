@@ -27,8 +27,6 @@ const templateSets = {
   'rubin-observatory': [
     'dist/tokens.css',
     'dist/tokens.dark.css',
-    'assets/rubin-imagotype/rubin-imagotype-color-on-white-crop.svg',
-    'assets/rubin-imagotype/rubin-imagotype-color-on-black-crop.svg',
     'assets/favicon/rubin-favicon-transparent-32px.png',
     'assets/partner-logos/rubin-partners.png',
   ],

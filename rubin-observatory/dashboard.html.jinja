@@ -15,16 +15,30 @@
 {% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to editions</a>
 <header class="site-header">
-  {% set logo = assets.images.get('rubin_imagotype_color_on_white_crop_svg') %}
-  {% if logo %}<span class="logo">{{ logo|safe }}</span>{% endif %}
-  <div class="site-header__text">
-    <p class="kicker">Documentation editions</p>
-    <h1>{{ project.title }}</h1>
-  </div>
+  <p class="kicker">Documentation editions</p>
+  <h1>{{ project.title }}</h1>
+  {# The site's hostname, linked to the default edition. #}
+  {% set hostname = project.published_url.split('/')[2] %}
+  <p class="site-url"><a href="{{ project.published_url }}">{{ hostname }}</a></p>
+  {# Jump links to the sections after Current, in page order. #}
+  {% set jump_targets = [] %}
+  {% if editions.releases %}{% set _ = jump_targets.append(('releases', 'Releases')) %}{% endif %}
+  {% if editions.major %}{% set _ = jump_targets.append(('major-versions', 'Major versions')) %}{% endif %}
+  {% if editions.minor %}{% set _ = jump_targets.append(('minor-versions', 'Minor versions')) %}{% endif %}
+  {% if editions.drafts %}{% set _ = jump_targets.append(('drafts', 'Drafts')) %}{% endif %}
+  {% if jump_targets %}
+  <nav class="jump-links" aria-label="Sections">
+    <span class="jump-links__label">Jump to</span>
+    {% for target, label in jump_targets %}
+    <a href="#{{ target }}">{{ label }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
 </header>
 
-<main>
+<main id="main">
 {# Jira issue key from a ticket branch name, or "" if there is none.
    Rubin ticket branches are named t/<KEY> or tickets/<KEY> where the key
    looks like DM-12345. The key may carry a suffix that starts with a

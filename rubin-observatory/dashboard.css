@@ -32,21 +32,28 @@ a:hover {
   color: var(--rsd-component-text-link-hover-color);
 }
 
+/* Skip link for keyboard and screen-reader users: visually hidden until it
+ * receives focus, then shown at the top of the page. */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--rsd-component-page-background-color);
+  color: var(--rsd-component-text-link-color);
+  z-index: 1;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
 .site-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
   padding: 1.5rem 0 1rem;
   margin-bottom: 1rem;
 }
 
-.site-header .logo svg {
-  display: block;
-  height: 3.5rem;
-  width: auto;
-}
-
-.site-header__text .kicker {
+.site-header .kicker {
   margin: 0;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -58,6 +65,27 @@ h1 {
   margin: 0;
   font-size: 1.75rem;
   color: var(--rsd-component-text-headline-color);
+}
+
+/* The site's hostname, linked to the default edition. */
+.site-url {
+  margin: 0.25rem 0 0;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95rem;
+}
+
+/* Jump links to the sections after Current. */
+.jump-links {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.jump-links__label {
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.jump-links a {
+  margin-left: 0.75rem;
 }
 
 section {
