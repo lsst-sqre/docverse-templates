@@ -13,6 +13,7 @@ js = ["dashboard.js"]
 images = [
   "rsd/rubin-imagotype-color-on-white-crop.svg",
   "rsd/rubin-favicon-transparent-32px.png",
+  "rsd/rubin-partners.png",
 ]
 
 [error_404]
