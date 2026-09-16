@@ -20,6 +20,7 @@ template = "404.html.jinja"
 
 [error_404.assets]
 css = ["rsd/tokens.css", "rsd/tokens.dark-scheme.css", "dashboard.css"]
+js = ["404.js"]
 images = [
   "rsd/rubin-favicon-transparent-32px.png",
 ]

@@ -16,14 +16,17 @@
 {% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
 </head>
 <body class="error-page">
-<header class="site-header">
-  <p class="kicker">{{ project.title }}</p>
+<main class="error-page__content">
   <h1>Page not found</h1>
-</header>
-
-<main>
-<p>The page you requested doesn&rsquo;t exist in <strong>{{ project.title }}</strong>.</p>
-<p><a href="{{ project.published_url }}v/">Browse all editions of {{ project.title }}</a></p>
+  {# The 404 page is rendered once and served for every missing path, so the
+     requested URL is not known at render time; 404.js fills it in from the
+     browser's location. Hidden until then so a no-JS reader sees no blank. #}
+  <p class="error-page__url" hidden><code></code></p>
+  <p class="error-page__actions">
+    Return to the <a href="{{ project.published_url }}">{{ project.title }} documentation</a>
+    or <a href="{{ project.published_url }}v/">browse all editions of {{ project.title }}</a>.
+  </p>
 </main>
+{% if assets.js %}<script>{{ assets.js|safe }}</script>{% endif %}
 </body>
 </html>

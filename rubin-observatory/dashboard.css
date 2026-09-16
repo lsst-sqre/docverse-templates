@@ -215,6 +215,36 @@ li {
   }
 }
 
-.error-page main {
-  margin-top: 1rem;
+/* 404 page: content vertically centred in the viewport. The body keeps
+ * the dashboard's measure and side padding; box-sizing keeps the top
+ * border and padding inside the viewport height. */
+.error-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-page__content h1 {
+  margin-bottom: 1rem;
+}
+
+/* The requested URL: enlarged monospace, allowed to wrap anywhere so a long
+ * path never forces horizontal scrolling. */
+.error-page__url {
+  margin: 0 0 1.5rem;
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.error-page__url code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.error-page__actions {
+  margin: 0;
+  font-size: 1.1rem;
 }
