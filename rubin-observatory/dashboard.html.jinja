@@ -26,14 +26,21 @@
 
 <main>
 {# Jira issue key from a ticket branch name, or "" if there is none.
-   Rubin ticket branches are named t/<KEY> or tickets/<KEY>, optionally with
-   further path segments; the key itself looks like DM-12345. #}
+   Rubin ticket branches are named t/<KEY> or tickets/<KEY> where the key
+   looks like DM-12345. The key may carry a suffix that starts with a
+   non-digit (DM-12345a, DM-12345-my-feature), and further path segments
+   are ignored; both still point at DM-12345. #}
 {% macro jira_key(git_ref) -%}
   {%- set parts = git_ref.split('/') -%}
   {%- if parts | length >= 2 and parts[0] in ('t', 'tickets') -%}
-    {%- set key = parts[1] -%}
-    {%- set project, sep, number = key.rpartition('-') -%}
-    {%- if project and project.isalpha() and project.isupper() and number.isdigit() -%}{{ key }}{%- endif -%}
+    {%- set project, sep, rest = parts[1].partition('-') -%}
+    {%- if project.isalpha() and project.isupper() and sep -%}
+      {%- set ns = namespace(digits='', done=false) -%}
+      {%- for ch in rest -%}
+        {%- if not ns.done and ch.isdigit() -%}{%- set ns.digits = ns.digits ~ ch -%}{%- else -%}{%- set ns.done = true -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if ns.digits -%}{{ project }}-{{ ns.digits }}{%- endif -%}
+    {%- endif -%}
   {%- endif -%}
 {%- endmacro %}
 {# One edition entry: linked title plus a muted "updated" timestamp.

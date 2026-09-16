@@ -49,8 +49,15 @@ date_updated = 2026-07-03T16:00:00Z
 # No current build: a draft edition that has been created but never built.
 
 [[editions]]
-slug = "t-DM-55901"
-title = "t/DM-55901"
+slug = "t-DM-55901a"
+title = "t/DM-55901a"
 kind = "draft"
 date_updated = 2026-09-11T16:30:00Z
-build = { git_ref = "t/DM-55901", date = 2026-09-11T16:29:18Z }
+build = { git_ref = "t/DM-55901a", date = 2026-09-11T16:29:18Z }
+
+[[editions]]
+slug = "tickets-DM-55880-nublado-docs"
+title = "tickets/DM-55880-nublado-docs"
+kind = "draft"
+date_updated = 2026-09-10T12:00:00Z
+build = { git_ref = "tickets/DM-55880-nublado-docs", date = 2026-09-10T11:58:41Z }
