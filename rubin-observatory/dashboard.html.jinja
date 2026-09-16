@@ -25,13 +25,29 @@
 </header>
 
 <main>
+{# Jira issue key from a ticket branch name, or "" if there is none.
+   Rubin ticket branches are named t/<KEY> or tickets/<KEY>, optionally with
+   further path segments; the key itself looks like DM-12345. #}
+{% macro jira_key(git_ref) -%}
+  {%- set parts = git_ref.split('/') -%}
+  {%- if parts | length >= 2 and parts[0] in ('t', 'tickets') -%}
+    {%- set key = parts[1] -%}
+    {%- set project, sep, number = key.rpartition('-') -%}
+    {%- if project and project.isalpha() and project.isupper() and number.isdigit() -%}{{ key }}{%- endif -%}
+  {%- endif -%}
+{%- endmacro %}
 {# One edition entry: linked title plus a muted "updated" timestamp.
    The server renders an ISO date; dashboard.js humanizes it ("2 hours ago")
-   and the full ISO 8601 timestamp is shown on hover via the title attribute. #}
-{% macro edition_item(edition) -%}
+   and the full ISO 8601 timestamp is shown on hover via the title attribute.
+   With jira=true, a ticket branch also gets a link to its Jira issue. #}
+{% macro edition_item(edition, jira=false) -%}
     <li><a href="{{ edition.published_url }}">{{ edition.title }}</a>
       {%- set iso = edition.date_updated.isoformat() %}
-      <time class="updated" datetime="{{ iso }}" title="{{ iso }}">{{ edition.date_updated.strftime('%Y-%m-%d') }}</time></li>
+      <time class="updated" datetime="{{ iso }}" title="{{ iso }}">{{ edition.date_updated.strftime('%Y-%m-%d') }}</time>
+      {%- if jira and edition.build %}{% set key = jira_key(edition.build.git_ref) | trim %}
+      {%- if key %}
+      <a class="jira" href="https://rubinobs.atlassian.net/browse/{{ key }}" title="{{ key }}">Jira</a>
+      {%- endif %}{% endif %}</li>
 {%- endmacro %}
 {% if editions.main or editions.alternates %}
 <section id="main-edition">
@@ -85,7 +101,7 @@
   <h2>Drafts</h2>
   <ul>
   {% for edition in editions.drafts %}
-    {{ edition_item(edition) }}
+    {{ edition_item(edition, jira=true) }}
   {% endfor %}
   </ul>
 </section>
