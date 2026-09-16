@@ -39,7 +39,7 @@
   {% endif %}
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
 {# Jira issue key from a ticket branch name, or "" if there is none.
    Rubin ticket branches are named t/<KEY> or tickets/<KEY> where the key
    looks like DM-12345. The key may carry a suffix that starts with a
@@ -68,12 +68,12 @@
       <time class="updated" datetime="{{ iso }}" title="{{ iso }}">{{ edition.date_updated.strftime('%Y-%m-%d') }}</time>
       {%- if jira and edition.build %}{% set key = jira_key(edition.build.git_ref) | trim %}
       {%- if key %}
-      <a class="jira" href="https://rubinobs.atlassian.net/browse/{{ key }}" title="{{ key }}">Jira</a>
+      <a class="jira" href="https://rubinobs.atlassian.net/browse/{{ key }}" title="{{ key }}" aria-label="Jira issue {{ key }}">Jira</a>
       {%- endif %}{% endif %}</li>
 {%- endmacro %}
 {% if editions.main or editions.alternates %}
-<section id="main-edition">
-  <h2>Current</h2>
+<section id="main-edition" aria-labelledby="main-edition-title">
+  <h2 id="main-edition-title">Current</h2>
   <ul>
   {% if editions.main %}
     {{ edition_item(editions.main) }}
@@ -86,8 +86,8 @@
 {% endif %}
 
 {% if editions.releases %}
-<section id="releases">
-  <h2>Releases</h2>
+<section id="releases" aria-labelledby="releases-title">
+  <h2 id="releases-title">Releases</h2>
   <ul>
   {% for edition in editions.releases %}
     {{ edition_item(edition) }}
@@ -97,8 +97,8 @@
 {% endif %}
 
 {% if editions.major %}
-<section id="major-versions">
-  <h2>Major versions</h2>
+<section id="major-versions" aria-labelledby="major-versions-title">
+  <h2 id="major-versions-title">Major versions</h2>
   <ul>
   {% for edition in editions.major %}
     {{ edition_item(edition) }}
@@ -108,8 +108,8 @@
 {% endif %}
 
 {% if editions.minor %}
-<section id="minor-versions">
-  <h2>Minor versions</h2>
+<section id="minor-versions" aria-labelledby="minor-versions-title">
+  <h2 id="minor-versions-title">Minor versions</h2>
   <ul>
   {% for edition in editions.minor %}
     {{ edition_item(edition) }}
@@ -119,8 +119,8 @@
 {% endif %}
 
 {% if editions.drafts %}
-<section id="drafts">
-  <h2>Drafts</h2>
+<section id="drafts" aria-labelledby="drafts-title">
+  <h2 id="drafts-title">Drafts</h2>
   <ul>
   {% for edition in editions.drafts %}
     {{ edition_item(edition, jira=true) }}

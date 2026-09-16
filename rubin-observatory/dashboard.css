@@ -53,6 +53,20 @@ a:hover {
   color: var(--rsd-component-text-link-hover-color);
 }
 
+/* Keyboard focus ring in the brand teal. The headline token is primary-600
+ * in light mode and the lighter primary-400 in dark mode (see the contrast
+ * overrides above), so the ring keeps its contrast in both. */
+:focus-visible {
+  outline: 2px solid var(--rsd-component-text-headline-color);
+  outline-offset: 2px;
+}
+
+/* The skip link moves focus to <main> (tabindex="-1"); no ring is wanted on
+ * the whole content column. */
+main:focus {
+  outline: none;
+}
+
 /* Skip link for keyboard and screen-reader users: visually hidden until it
  * receives focus, then shown at the top of the page. */
 .skip-link {
@@ -113,8 +127,10 @@ section {
   margin-top: 1.5rem;
 }
 
+/* 1.2rem bold is WCAG "large text", so the brand teal's 4.1:1 on white
+ * passes AA (3:1) for these headings. */
 section h2 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-bottom: 0.25rem;
   color: var(--rsd-component-text-headline-color);
 }

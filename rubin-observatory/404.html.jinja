@@ -16,7 +16,7 @@
 {% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
 </head>
 <body class="error-page">
-<main class="error-page__content">
+<main id="main" class="error-page__content">
   <h1>Page not found</h1>
   {# The 404 page is rendered once and served for every missing path, so the
      requested URL is not known at render time; 404.js fills it in from the
