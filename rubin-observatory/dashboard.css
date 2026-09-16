@@ -70,8 +70,15 @@ section h2 {
   color: var(--rsd-component-text-headline-color);
 }
 
+/* Edition lists: plain rows, no bullets. */
 ul {
-  padding-left: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0.25rem 0;
 }
 
 /* Muted "updated" timestamp after each edition link. */
