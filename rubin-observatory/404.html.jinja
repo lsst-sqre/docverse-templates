@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Page not found &mdash; {{ project.title }}</title>
+<meta name="description" content="The requested page does not exist in the {{ project.title }} documentation.">
+{# Served for every missing path; never worth indexing even if a path
+   answers with a 200. #}
+<meta name="robots" content="noindex">
+<meta name="generator" content="docverse {{ docverse.version }}">
+<meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f2121" media="(prefers-color-scheme: dark)">
+{% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
+{% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
+{# Source Sans 3 variable font (upright and italic, weights 200-900) from Google Fonts #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+{% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
+</head>
+<body class="error-page">
+<main id="main" class="error-page__content">
+  <h1>Page not found</h1>
+  {# The 404 page is rendered once and served for every missing path, so the
+     requested URL is not known at render time; 404.js fills it in from the
+     browser's location. Hidden until then so a no-JS reader sees no blank. #}
+  <p class="error-page__url" hidden><code></code></p>
+  <p class="error-page__actions">
+    Return to the <a href="{{ project.published_url }}">{{ project.title }} documentation</a>
+    or <a href="{{ project.published_url }}v/">browse all editions of {{ project.title }}</a>.
+  </p>
+</main>
+{% if assets.js %}<script>{{ assets.js|safe }}</script>{% endif %}
+</body>
+</html>

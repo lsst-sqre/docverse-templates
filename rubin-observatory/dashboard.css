@@ -1,0 +1,266 @@
+/* Rubin Observatory Docverse dashboard styles.
+ *
+ * Colours come from the Rubin Style Dictionary design tokens, which Docverse
+ * concatenates ahead of this file: rsd/tokens.css for the light palette and
+ * rsd/tokens.dark-scheme.css, which re-declares the component tokens under a
+ * prefers-color-scheme media query. The page follows the system preference
+ * only; there is no user toggle. The Source Sans 3 variable font is loaded
+ * from Google Fonts by the templates.
+ */
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Dark-scheme contrast fixes. Two of the rubin-style-dictionary dark
+ * component tokens fall short of WCAG AA against the dark page background
+ * (#1f2121): the headline teal (primary-600, 3.9:1) and the link hover blue
+ * (blue-600-ish #146685, 2.5:1). Re-point them at lighter shades from the
+ * same palette until the tokens are fixed upstream
+ * (https://github.com/lsst-sqre/squareone/issues/708). This block follows
+ * rsd/tokens.dark-scheme.css in the concatenated stylesheet, so it wins. */
+@media (prefers-color-scheme: dark) {
+  body {
+    --rsd-component-text-headline-color: var(--rsd-color-primary-400); /* #00babc, 6.7:1 */
+    --rsd-component-text-link-hover-color: var(--rsd-color-blue-200); /* #b8e3f2, 11.8:1 */
+  }
+}
+
+body {
+  font-family:
+    "Source Sans 3",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  line-height: 1.5;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  max-width: 48rem;
+  color: var(--rsd-component-text-color);
+  background: var(--rsd-component-page-background-color);
+  border-top: 6px solid var(--rsd-color-primary-600);
+}
+
+a {
+  color: var(--rsd-component-text-link-color);
+}
+
+a:hover {
+  color: var(--rsd-component-text-link-hover-color);
+}
+
+/* Keyboard focus ring in the brand teal. The headline token is primary-600
+ * in light mode and the lighter primary-400 in dark mode (see the contrast
+ * overrides above), so the ring keeps its contrast in both. */
+:focus-visible {
+  outline: 2px solid var(--rsd-component-text-headline-color);
+  outline-offset: 2px;
+}
+
+/* The skip link moves focus to <main> (tabindex="-1"); no ring is wanted on
+ * the whole content column. */
+main:focus {
+  outline: none;
+}
+
+/* Skip link for keyboard and screen-reader users: visually hidden until it
+ * receives focus, then shown at the top of the page. */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--rsd-component-page-background-color);
+  color: var(--rsd-component-text-link-color);
+  z-index: 1;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
+.site-header {
+  padding: 1.5rem 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.site-header .kicker {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: var(--rsd-component-text-headline-color);
+}
+
+/* The site's hostname, linked to the default edition. */
+.site-url {
+  margin: 0.25rem 0 0;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95rem;
+}
+
+/* Jump links to the sections after Current. */
+.jump-links {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.jump-links__label {
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.jump-links a {
+  margin-left: 0.75rem;
+}
+
+section {
+  margin-top: 1.5rem;
+}
+
+/* 1.2rem bold is WCAG "large text", so the brand teal's 4.1:1 on white
+ * passes AA (3:1) for these headings. */
+section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+  color: var(--rsd-component-text-headline-color);
+}
+
+/* Edition lists: plain rows, no bullets. */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+/* Muted "updated" timestamp after each edition link. */
+.updated {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--rsd-component-text-secondary-color);
+  white-space: nowrap;
+}
+
+/* Link to the Jira issue for a ticket-branch draft. */
+.jira {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Page footer: a pointer to lsst.io, then the footer every Rubin guide
+ * shares (mirroring documenteer's rubin-footer): link inventory, copyright,
+ * funding statement, and the funding-partner logo lineup. */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rsd-component-divider-color);
+}
+
+.site-footer__lead {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  color: var(--rsd-component-text-headline-color);
+}
+
+.rubin-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.rubin-footer__nav-title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.rubin-footer__nav-list {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.rubin-footer__nav-list li {
+  margin: 0.125rem 0;
+}
+
+.rubin-footer__copyright {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+}
+
+.rubin-footer__funding {
+  font-size: 0.8rem;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.rubin-footer__funding p {
+  margin: 0.5rem 0;
+}
+
+.rubin-footer__partner-logos {
+  margin-top: 1.5rem;
+}
+
+.rubin-footer__partner-logos img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* The partner logo lineup is only available as a dark-on-transparent PNG;
+ * invert it to white-on-transparent in dark mode, as Squareone and the
+ * documenteer theme do. */
+@media (prefers-color-scheme: dark) {
+  .rubin-footer__partner-logos img {
+    filter: invert(100%);
+  }
+}
+
+/* 404 page: content vertically centred in the viewport. The body keeps
+ * the dashboard's measure and side padding; box-sizing keeps the top
+ * border and padding inside the viewport height. */
+.error-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-page__content h1 {
+  margin-bottom: 1rem;
+}
+
+/* The requested URL: enlarged monospace, allowed to wrap anywhere so a long
+ * path never forces horizontal scrolling. */
+.error-page__url {
+  margin: 0 0 1.5rem;
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
+  color: var(--rsd-component-text-secondary-color);
+}
+
+.error-page__url code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.error-page__actions {
+  margin: 0;
+  font-size: 1.1rem;
+}

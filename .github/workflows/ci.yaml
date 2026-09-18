@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches-ignore:
+      # These should always correspond to pull requests, so ignore them for
+      # the push trigger and let them be triggered by the pull_request
+      # trigger, avoiding running the workflow twice.
+      - "dependabot/**"
+      - "renovate/**"
+      - "tickets/**"
+      - "u/**"
+    tags:
+      - "*"
+  pull_request: {}
+
+jobs:
+  check-rsd:
+    name: Check rubin-style-dictionary outputs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: "npm"
+          node-version-file: ".nvmrc"
+
+      - name: Authenticate GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${NPM_PKG_TOKEN}" > ~/.npmrc
+        env:
+          NPM_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify committed rsd outputs match the installed package
+        run: npm run check

@@ -1,0 +1,63 @@
+# Scenario 2: a project like phalanx.lsst.io with a main edition and a
+# handful of draft editions from ticket branches.
+title = "Main plus drafts (phalanx)"
+
+[org]
+slug = "rubin"
+title = "Rubin Observatory"
+base_domain = "lsst.io"
+
+[project]
+slug = "phalanx"
+title = "Phalanx"
+source_repo_url = "https://github.com/lsst-sqre/phalanx"
+published_url = "https://phalanx.lsst.io/"
+
+[[editions]]
+slug = "__main"
+title = "Current"
+kind = "main"
+date_updated = 2026-09-14T18:22:00Z
+build = { git_ref = "main", date = 2026-09-14T18:21:03Z }
+
+[[editions]]
+slug = "tickets-DM-56087"
+title = "tickets/DM-56087"
+kind = "draft"
+date_updated = 2026-09-15T13:40:00Z
+build = { git_ref = "tickets/DM-56087", date = 2026-09-15T13:39:10Z }
+
+[[editions]]
+slug = "tickets-DM-55910"
+title = "tickets/DM-55910"
+kind = "draft"
+date_updated = 2026-09-12T09:15:00Z
+build = { git_ref = "tickets/DM-55910", date = 2026-09-12T09:14:30Z }
+
+[[editions]]
+slug = "u-jsick-gafaelfawr-docs"
+title = "u/jsick/gafaelfawr-docs"
+kind = "draft"
+date_updated = 2026-08-28T21:02:00Z
+build = { git_ref = "u/jsick/gafaelfawr-docs", date = 2026-08-28T21:01:44Z }
+
+[[editions]]
+slug = "tickets-DM-54001"
+title = "tickets/DM-54001"
+kind = "draft"
+date_updated = 2026-07-03T16:00:00Z
+# No current build: a draft edition that has been created but never built.
+
+[[editions]]
+slug = "t-DM-55901a"
+title = "t/DM-55901a"
+kind = "draft"
+date_updated = 2026-09-11T16:30:00Z
+build = { git_ref = "t/DM-55901a", date = 2026-09-11T16:29:18Z }
+
+[[editions]]
+slug = "tickets-DM-55880-nublado-docs"
+title = "tickets/DM-55880-nublado-docs"
+kind = "draft"
+date_updated = 2026-09-10T12:00:00Z
+build = { git_ref = "tickets/DM-55880-nublado-docs", date = 2026-09-10T11:58:41Z }

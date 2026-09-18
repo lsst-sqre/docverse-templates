@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+{% set hostname = project.published_url.split('/')[2] %}
+{% set dashboard_url = project.published_url ~ 'v/' %}
+{% set description = 'Documentation editions of ' ~ project.title ~ ': current, release, and draft versions published at ' ~ hostname ~ '.' %}
+<title>{{ project.title }} &mdash; {{ org.title }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ dashboard_url }}">
+<meta name="generator" content="docverse {{ docverse.version }}">
+<meta name="docverse:rendered-at" content="{{ rendered_at.isoformat() }}">
+{# Mobile browser chrome follows the page background token in each scheme
+   (rsd component.page.background.color; meta tags cannot read CSS variables). #}
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1f2121" media="(prefers-color-scheme: dark)">
+{# Link previews (Slack, Jira, social). #}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ org.title }}">
+<meta property="og:title" content="{{ project.title }} documentation editions">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ dashboard_url }}">
+<meta name="twitter:card" content="summary">
+{% set favicon = assets.images.get('rubin_favicon_transparent_32px_png') %}
+{% if favicon %}<link rel="icon" type="image/png" href="{{ favicon }}">{% endif %}
+{# Source Sans 3 variable font (upright and italic, weights 200-900) from Google Fonts #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+{% if assets.css %}<style>{{ assets.css|safe }}</style>{% endif %}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to editions</a>
+<header class="site-header">
+  <p class="kicker">Documentation editions</p>
+  <h1>{{ project.title }}</h1>
+  {# The site's hostname, linked to the default edition. #}
+  <p class="site-url"><a href="{{ project.published_url }}">{{ hostname }}</a></p>
+  {# Jump links to the sections after Current, in page order. #}
+  {% set jump_targets = [] %}
+  {% if editions.releases %}{% set _ = jump_targets.append(('releases', 'Releases')) %}{% endif %}
+  {% if editions.major %}{% set _ = jump_targets.append(('major-versions', 'Major versions')) %}{% endif %}
+  {% if editions.minor %}{% set _ = jump_targets.append(('minor-versions', 'Minor versions')) %}{% endif %}
+  {% if editions.drafts %}{% set _ = jump_targets.append(('drafts', 'Drafts')) %}{% endif %}
+  {% if jump_targets %}
+  <nav class="jump-links" aria-label="Sections">
+    <span class="jump-links__label">Jump to</span>
+    {% for target, label in jump_targets %}
+    <a href="#{{ target }}">{{ label }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+</header>
+
+<main id="main" tabindex="-1">
+{# Jira issue key from a ticket branch name, or "" if there is none.
+   Rubin ticket branches are named t/<KEY> or tickets/<KEY> where the key
+   looks like DM-12345. The key may carry a suffix that starts with a
+   non-digit (DM-12345a, DM-12345-my-feature), and further path segments
+   are ignored; both still point at DM-12345. #}
+{% macro jira_key(git_ref) -%}
+  {%- set parts = git_ref.split('/') -%}
+  {%- if parts | length >= 2 and parts[0] in ('t', 'tickets') -%}
+    {%- set project, sep, rest = parts[1].partition('-') -%}
+    {%- if project.isalpha() and project.isupper() and sep -%}
+      {%- set ns = namespace(digits='', done=false) -%}
+      {%- for ch in rest -%}
+        {%- if not ns.done and ch.isdigit() -%}{%- set ns.digits = ns.digits ~ ch -%}{%- else -%}{%- set ns.done = true -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if ns.digits -%}{{ project }}-{{ ns.digits }}{%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro %}
+{# One edition entry: linked title plus a muted "updated" timestamp.
+   The server renders an ISO date; dashboard.js humanizes it ("2 hours ago")
+   and the full ISO 8601 timestamp is shown on hover via the title attribute.
+   With jira=true, a ticket branch also gets a link to its Jira issue. #}
+{% macro edition_item(edition, jira=false) -%}
+    <li><a href="{{ edition.published_url }}">{{ edition.title }}</a>
+      {%- set iso = edition.date_updated.isoformat() %}
+      <time class="updated" datetime="{{ iso }}" title="{{ iso }}">{{ edition.date_updated.strftime('%Y-%m-%d') }}</time>
+      {%- if jira and edition.build %}{% set key = jira_key(edition.build.git_ref) | trim %}
+      {%- if key %}
+      <a class="jira" href="https://rubinobs.atlassian.net/browse/{{ key }}" title="{{ key }}" aria-label="Jira issue {{ key }}">Jira</a>
+      {%- endif %}{% endif %}</li>
+{%- endmacro %}
+{% if editions.main or editions.alternates %}
+<section id="main-edition" aria-labelledby="main-edition-title">
+  <h2 id="main-edition-title">Current</h2>
+  <ul>
+  {% if editions.main %}
+    {{ edition_item(editions.main) }}
+  {% endif %}
+  {% for edition in editions.alternates %}
+    {{ edition_item(edition) }}
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.releases %}
+<section id="releases" aria-labelledby="releases-title">
+  <h2 id="releases-title">Releases</h2>
+  <ul>
+  {% for edition in editions.releases %}
+    {{ edition_item(edition) }}
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.major %}
+<section id="major-versions" aria-labelledby="major-versions-title">
+  <h2 id="major-versions-title">Major versions</h2>
+  <ul>
+  {% for edition in editions.major %}
+    {{ edition_item(edition) }}
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.minor %}
+<section id="minor-versions" aria-labelledby="minor-versions-title">
+  <h2 id="minor-versions-title">Minor versions</h2>
+  <ul>
+  {% for edition in editions.minor %}
+    {{ edition_item(edition) }}
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if editions.drafts %}
+<section id="drafts" aria-labelledby="drafts-title">
+  <h2 id="drafts-title">Drafts</h2>
+  <ul>
+  {% for edition in editions.drafts %}
+    {{ edition_item(edition, jira=true) }}
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+</main>
+
+<footer class="site-footer">
+  <p class="site-footer__lead">Find more technical documentation on <a href="https://www.lsst.io">lsst.io</a></p>
+
+  {# The footer every Rubin guide shares, mirroring documenteer's
+     rubin-footer.html: the project link inventory, the copyright statement,
+     the agency funding statement, and the funding-partner logo lineup. #}
+  <nav class="rubin-footer__nav" aria-label="Rubin Observatory">
+    <div class="rubin-footer__nav-column">
+      <p class="rubin-footer__nav-title">
+        <a href="https://rubinobservatory.org/">Rubin Observatory</a>
+      </p>
+      <ul class="rubin-footer__nav-list">
+        <li><a href="https://rubinobservatory.org/for-scientists">For scientists</a></li>
+        <li><a href="https://rubinobservatory.org/news">News</a></li>
+      </ul>
+    </div>
+    <div class="rubin-footer__nav-column">
+      <p class="rubin-footer__nav-title">
+        <a href="https://www.lsst.io">Documentation</a>
+      </p>
+    </div>
+    <div class="rubin-footer__nav-column">
+      <p class="rubin-footer__nav-title">
+        <a href="https://data.lsst.cloud">data.lsst.cloud</a>
+      </p>
+    </div>
+    <div class="rubin-footer__nav-column">
+      <p class="rubin-footer__nav-title">
+        <a href="https://community.lsst.org">Community forum</a>
+      </p>
+    </div>
+  </nav>
+
+  <p class="rubin-footer__copyright">
+    &copy; Copyright {{ rendered_at.year }} Association of Universities for Research in Astronomy, Inc.
+  </p>
+
+  <div class="rubin-footer__funding">
+    <p>
+      The U.S. National Science Foundation (<a href="https://www.nsf.gov/">NSF</a>)
+      and the U.S. Department of Energy (<a href="https://www.energy.gov/">DOE</a>)
+      Office of Science will support Rubin Observatory in its operations phase to
+      carry out the Legacy Survey of Space and Time. They will also provide support
+      for scientific research with the data. During operations, NSF funding is
+      managed by the Association of Universities for Research in Astronomy
+      (<a href="https://www.aura-astronomy.org/">AURA</a>) under a cooperative
+      agreement with NSF, and DOE funding is managed by SLAC National Accelerator
+      Laboratory (<a href="https://www6.slac.stanford.edu/">SLAC</a>), under
+      contract by DOE. Rubin Observatory is operated by
+      <a href="https://noirlab.edu/public/">NSF NOIRLab</a> and SLAC.
+    </p>
+    <p>
+      NSF is an independent federal agency created by Congress in 1950 to promote
+      the progress of science. NSF supports basic research and people to create
+      knowledge that transforms the future.
+    </p>
+    <p>
+      The DOE Office of Science is the single largest supporter of basic research
+      in the physical sciences in the United States and is working to address some
+      of the most pressing challenges of our time.
+    </p>
+  </div>
+
+  {% set partners = assets.images.get('rubin_partners_png') %}
+  {% if partners %}
+  <div class="rubin-footer__partner-logos">
+    <img
+      src="{{ partners }}"
+      alt="Logos of the Vera C. Rubin Observatory, NSF, US DOE, NOIRLab, AURA, and SLAC."
+    />
+  </div>
+  {% endif %}
+</footer>
+
+{% if assets.js %}<script>{{ assets.js|safe }}</script>{% endif %}
+</body>
+</html>
