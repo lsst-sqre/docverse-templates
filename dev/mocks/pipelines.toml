@@ -1,0 +1,177 @@
+# Scenario 5: pipelines.lsst.io, whose editions are named by EUPS tags.
+# The main edition tracks the newest final release (eups_release mode),
+# `weekly` and `daily` track the newest weekly and daily tags, numbered
+# releases include two-component and legacy hyphenated slugs migrated from
+# LTD (`v17_0`, `13-0`), weeklies include legacy `w-YYYY-WW` slugs, and
+# dailies, a release candidate and a ticket branch are drafts.
+title = "EUPS releases, weeklies, and dailies (pipelines)"
+
+[org]
+slug = "rubin"
+title = "Rubin Observatory"
+base_domain = "lsst.io"
+
+[project]
+slug = "pipelines"
+title = "LSST Science Pipelines"
+source_repo_url = "https://github.com/lsst/pipelines_lsst_io"
+published_url = "https://pipelines.lsst.io/"
+
+# Main and the meta editions that track the newest tag of each kind.
+
+[[editions]]
+slug = "__main"
+title = "Latest release"
+kind = "main"
+date_updated = 2026-10-21T18:40:00Z
+build = { git_ref = "v30_0_11", date = 2026-10-21T18:38:12Z }
+
+[[editions]]
+slug = "weekly"
+title = "Weekly release"
+kind = "release"
+date_updated = 2026-11-06T05:12:00Z
+build = { git_ref = "w_2026_45", date = 2026-11-06T05:10:41Z }
+
+[[editions]]
+slug = "daily"
+title = "Daily release"
+kind = "release"
+date_updated = 2026-11-08T04:48:00Z
+build = { git_ref = "d_2026_11_08", date = 2026-11-08T04:46:03Z }
+
+# Numbered releases, listed here out of version order to show the sort.
+
+[[editions]]
+slug = "v30_0_10"
+title = "v30_0_10"
+kind = "release"
+date_updated = 2026-09-30T17:02:00Z
+build = { git_ref = "v30_0_10", date = 2026-09-30T17:00:51Z }
+
+[[editions]]
+slug = "v30_0_11"
+title = "v30_0_11"
+kind = "release"
+date_updated = 2026-10-21T18:40:00Z
+build = { git_ref = "v30_0_11", date = 2026-10-21T18:38:12Z }
+
+[[editions]]
+slug = "v17_0"
+title = "v17_0"
+kind = "release"
+date_updated = 2019-01-16T22:10:00Z
+build = { git_ref = "v17_0", date = 2019-01-16T22:08:30Z }
+
+[[editions]]
+slug = "v29_1_0"
+title = "v29_1_0"
+kind = "release"
+date_updated = 2025-06-12T15:30:00Z
+build = { git_ref = "v29_1_0", date = 2025-06-12T15:28:04Z }
+
+[[editions]]
+slug = "v17_0_1"
+title = "v17_0_1"
+kind = "release"
+date_updated = 2019-03-05T19:45:00Z
+build = { git_ref = "v17_0_1", date = 2019-03-05T19:43:20Z }
+
+[[editions]]
+slug = "13-0"
+title = "13-0"
+kind = "release"
+date_updated = 2017-03-15T20:00:00Z
+build = { git_ref = "13-0", date = 2017-03-15T19:58:00Z }
+
+# Weekly releases: five current ones (the switcher lists only four) plus
+# two legacy LTD slugs with hyphens.
+
+[[editions]]
+slug = "w_2026_45"
+title = "w_2026_45"
+kind = "release"
+date_updated = 2026-11-06T05:12:00Z
+build = { git_ref = "w_2026_45", date = 2026-11-06T05:10:41Z }
+
+[[editions]]
+slug = "w_2026_44"
+title = "w_2026_44"
+kind = "release"
+date_updated = 2026-10-30T05:09:00Z
+build = { git_ref = "w_2026_44", date = 2026-10-30T05:07:55Z }
+
+[[editions]]
+slug = "w_2026_43"
+title = "w_2026_43"
+kind = "release"
+date_updated = 2026-10-23T05:11:00Z
+build = { git_ref = "w_2026_43", date = 2026-10-23T05:09:37Z }
+
+[[editions]]
+slug = "w_2026_42"
+title = "w_2026_42"
+kind = "release"
+date_updated = 2026-10-16T05:14:00Z
+build = { git_ref = "w_2026_42", date = 2026-10-16T05:12:19Z }
+
+[[editions]]
+slug = "w_2026_41"
+title = "w_2026_41"
+kind = "release"
+date_updated = 2026-10-09T05:08:00Z
+build = { git_ref = "w_2026_41", date = 2026-10-09T05:06:44Z }
+
+[[editions]]
+slug = "w-2018-27"
+title = "w-2018-27"
+kind = "release"
+date_updated = 2018-07-06T06:02:00Z
+build = { git_ref = "w-2018-27", date = 2018-07-06T06:00:12Z }
+
+[[editions]]
+slug = "w-2018-06"
+title = "w-2018-06"
+kind = "release"
+date_updated = 2018-02-09T06:05:00Z
+build = { git_ref = "w-2018-06", date = 2018-02-09T06:03:48Z }
+
+# Daily releases are drafts: no built-in rule promotes them, and they age
+# out under the draft lifecycle rules.
+
+[[editions]]
+slug = "d_2026_11_08"
+title = "d_2026_11_08"
+kind = "draft"
+date_updated = 2026-11-08T04:48:00Z
+build = { git_ref = "d_2026_11_08", date = 2026-11-08T04:46:03Z }
+
+[[editions]]
+slug = "d_2026_11_06"
+title = "d_2026_11_06"
+kind = "draft"
+date_updated = 2026-11-06T04:51:00Z
+build = { git_ref = "d_2026_11_06", date = 2026-11-06T04:49:27Z }
+
+[[editions]]
+slug = "d_2026_11_07"
+title = "d_2026_11_07"
+kind = "draft"
+date_updated = 2026-11-07T04:47:00Z
+build = { git_ref = "d_2026_11_07", date = 2026-11-07T04:45:10Z }
+
+# Other drafts: a release candidate and a ticket branch.
+
+[[editions]]
+slug = "v30_0_12_rc1"
+title = "v30_0_12_rc1"
+kind = "draft"
+date_updated = 2026-11-05T21:30:00Z
+build = { git_ref = "v30_0_12_rc1", date = 2026-11-05T21:28:16Z }
+
+[[editions]]
+slug = "tickets-DM-56964"
+title = "tickets/DM-56964"
+kind = "draft"
+date_updated = 2026-11-07T16:20:00Z
+build = { git_ref = "tickets/DM-56964", date = 2026-11-07T16:18:52Z }

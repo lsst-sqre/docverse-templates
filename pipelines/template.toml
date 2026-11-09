@@ -1,0 +1,36 @@
+# Dashboard template configuration for pipelines.lsst.io.
+#
+# A copy of the rubin-observatory set whose dashboard groups the Science
+# Pipelines' EUPS-tagged editions (weekly and daily releases alongside the
+# numbered releases) and that renders its own version switcher.
+#
+# Design tokens and brand assets under rsd/ are copied from
+# @lsst-sqre/rubin-style-dictionary by `npm run build` (see scripts/build.js).
+# Do not edit files in rsd/ by hand.
+
+[dashboard]
+template = "dashboard.html.jinja"
+
+[dashboard.assets]
+css = ["rsd/tokens.css", "rsd/tokens.dark-scheme.css", "dashboard.css"]
+js = ["dashboard.js"]
+images = [
+  "rsd/rubin-favicon-transparent-32px.png",
+  "rsd/rubin-partners.png",
+]
+
+[error_404]
+template = "404.html.jinja"
+
+[error_404.assets]
+css = ["rsd/tokens.css", "rsd/tokens.dark-scheme.css", "dashboard.css"]
+js = ["404.js"]
+images = [
+  "rsd/rubin-favicon-transparent-32px.png",
+]
+
+# The switcher is rendered by the template below rather than the built-in
+# include_kinds renderer, so it can list the latest release, weekly, and
+# daily editions by slug and cap the number of weeklies.
+[switcher]
+template = "switcher.json.jinja"

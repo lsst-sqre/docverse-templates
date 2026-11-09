@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Copy design tokens and brand assets from @lsst-sqre/rubin-style-dictionary
- * into the rubin-observatory template set.
+ * into the template sets that use them (rubin-observatory and pipelines).
  *
  * Docverse fetches template sets directly from this repository, so the
  * built outputs are committed. Run `npm run build` after upgrading the
@@ -21,43 +21,47 @@ const rsdVersion = require('@lsst-sqre/rubin-style-dictionary/package.json')
 // Destination directory (relative to a template set) for rsd outputs.
 const outDirName = 'rsd';
 
-// Files to copy from the package into each template set, keyed by
-// template set directory. Paths are relative to the package root.
-const templateSets = {
-  'rubin-observatory': [
-    'dist/tokens.css',
-    'assets/favicon/rubin-favicon-transparent-32px.png',
-    'assets/partner-logos/rubin-partners.png',
-  ],
-};
+// Files to copy from the package into a template set's rsd/ directory.
+// Paths are relative to the package root.
+const rsdFiles = [
+  'dist/tokens.css',
+  'assets/favicon/rubin-favicon-transparent-32px.png',
+  'assets/partner-logos/rubin-partners.png',
+];
 
 // Derived outputs: {dest basename: (package root) => content}. These are
 // transformations of package files rather than straight copies.
-const derived = {
-  'rubin-observatory': {
-    // The package's dark tokens key off a `body.dark` class or a
-    // `[data-theme='dark']` attribute, i.e. a user-controlled toggle. The
-    // dashboards follow the system colour-scheme preference only, so rewrite
-    // the selector to plain `body` and wrap the block in a
-    // prefers-color-scheme media query.
-    'tokens.dark-scheme.css': (root) => {
-      const src = fs.readFileSync(path.join(root, 'dist/tokens.dark.css'), 'utf8');
-      const body = src.replace(/^[^{]+\{/, 'body {').trimEnd();
-      return (
-        '/* Derived from rubin-style-dictionary dist/tokens.dark.css by\n' +
-        ' * scripts/build.js: dark tokens applied on system preference. */\n' +
-        '@media (prefers-color-scheme: dark) {\n' +
-        body.replace(/^/gm, '  ') +
-        '\n}\n'
-      );
-    },
+const rsdDerived = {
+  // The package's dark tokens key off a `body.dark` class or a
+  // `[data-theme='dark']` attribute, i.e. a user-controlled toggle. The
+  // dashboards follow the system colour-scheme preference only, so rewrite
+  // the selector to plain `body` and wrap the block in a
+  // prefers-color-scheme media query.
+  'tokens.dark-scheme.css': (root) => {
+    const src = fs.readFileSync(path.join(root, 'dist/tokens.dark.css'), 'utf8');
+    const body = src.replace(/^[^{]+\{/, 'body {').trimEnd();
+    return (
+      '/* Derived from rubin-style-dictionary dist/tokens.dark.css by\n' +
+      ' * scripts/build.js: dark tokens applied on system preference. */\n' +
+      '@media (prefers-color-scheme: dark) {\n' +
+      body.replace(/^/gm, '  ') +
+      '\n}\n'
+    );
   },
+};
+
+// Template sets that carry an rsd/ directory, each with the files copied
+// and the outputs derived into it. The pipelines set is a copy of
+// rubin-observatory and shares its brand assets.
+const templateSets = {
+  'rubin-observatory': { files: rsdFiles, derived: rsdDerived },
+  pipelines: { files: rsdFiles, derived: rsdDerived },
 };
 
 const checkMode = process.argv.includes('--check');
 let stale = [];
 
-for (const [setName, files] of Object.entries(templateSets)) {
+for (const [setName, { files, derived }] of Object.entries(templateSets)) {
   const outDir = path.join(repoRoot, setName, outDirName);
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -65,7 +69,7 @@ for (const [setName, files] of Object.entries(templateSets)) {
     src: path.join(rsdRoot, rel),
     dest: path.join(outDir, path.basename(rel)),
   }));
-  for (const [name, make] of Object.entries(derived[setName] ?? {})) {
+  for (const [name, make] of Object.entries(derived)) {
     outputs.push({ content: make(rsdRoot), dest: path.join(outDir, name) });
   }
   outputs.push({
