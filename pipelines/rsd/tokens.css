@@ -1,0 +1,124 @@
+/**
+ * Do not edit directly
+ * Generated on Thu, 09 Jul 2026 15:52:12 GMT
+ */
+
+:root {
+  --rsd-asset-image-favicon-svg: "assets/favicon/rubin-favicon.svg";
+  --rsd-asset-image-favicon-png-32-px: "assets/favicon/rubin-favicon-transparent-32px.png";
+  --rsd-asset-image-favicon-png-49-px: "assets/favicon/rubin-favicon-transparent-49px.png";
+  --rsd-asset-image-construction-agencies-png: "assets/partner-logos/construction-agencies.png"; /* Construction funding agency logo lineup (black on transparent). */
+  --rsd-asset-image-operations-agencies-png: "assets/partner-logos/rubin-partners.png"; /* Rubin Operations funding agency logo lineup (black on transparent). */
+  --rsd-asset-image-rubin-imagotype-color-on-black-png: "assets/rubin-imagotype/rubin-imagotype-color-on-black.png";
+  --rsd-asset-image-rubin-imagotype-color-on-black-svg: "assets/rubin-imagotype/rubin-imagotype-color-on-black.svg";
+  --rsd-asset-image-rubin-imagotype-color-on-white-png: "assets/rubin-imagotype/rubin-imagotype-color-on-white.png";
+  --rsd-asset-image-rubin-imagotype-color-on-white-svg: "assets/rubin-imagotype/rubin-imagotype-color-on-white.svg";
+  --rsd-asset-image-rubin-imagotype-gray-on-black-png: "assets/rubin-imagotype/rubin-imagotype-gray-on-black.png";
+  --rsd-asset-image-rubin-imagotype-gray-on-black-svg: "assets/rubin-imagotype/rubin-imagotype-gray-on-black.svg";
+  --rsd-asset-image-rubin-imagotype-gray-on-white-png: "assets/rubin-imagotype/rubin-imagotype-gray-on-white.png";
+  --rsd-asset-image-rubin-imagotype-gray-on-white-svg: "assets/rubin-imagotype/rubin-imagotype-gray-on-white.svg";
+  --rsd-asset-image-rubin-imagotype-color-on-black-crop-png: "assets/rubin-imagotype/rubin-imagotype-color-on-black-crop.png";
+  --rsd-asset-image-rubin-imagotype-color-on-black-crop-svg: "assets/rubin-imagotype/rubin-imagotype-color-on-black-crop.svg";
+  --rsd-asset-image-rubin-imagotype-color-on-white-crop-png: "assets/rubin-imagotype/rubin-imagotype-color-on-white-crop.png";
+  --rsd-asset-image-rubin-imagotype-color-on-white-crop-svg: "assets/rubin-imagotype/rubin-imagotype-color-on-white-crop.svg";
+  --rsd-asset-image-rubin-imagotype-gray-on-black-crop-png: "assets/rubin-imagotype/rubin-imagotype-gray-on-black-crop.png";
+  --rsd-asset-image-rubin-imagotype-gray-on-black-crop-svg: "assets/rubin-imagotype/rubin-imagotype-gray-on-black-crop.svg";
+  --rsd-asset-image-rubin-imagotype-gray-on-white-crop-png: "assets/rubin-imagotype/rubin-imagotype-gray-on-white-crop.png";
+  --rsd-asset-image-rubin-imagotype-gray-on-white-crop-svg: "assets/rubin-imagotype/rubin-imagotype-gray-on-white-crop.svg";
+  --rsd-asset-image-rubin-imagotype-email-png: "assets/rubin-imagotype/rubin-imagotype-email.png";
+  --rsd-asset-image-rubin-watermark-watermark-png: "assets/rubin-watermarks/rubin-watermark.png";
+  --rsd-asset-image-rubin-watermark-letterhead-watermark-png: "assets/rubin-watermarks/rubin-letterhead-watermark.png";
+  --rsd-asset-image-rubin-watermark-letterhead-watermark-2-png: "assets/rubin-watermarks/rubin-letterhead-watermark-2.png";
+  --rsd-color-blue-100: #e5f4f9; /* Lightest blue tint for soft backgrounds */
+  --rsd-color-blue-200: #b8e3f2; /* Light blue for soft variant backgrounds */
+  --rsd-color-blue-300: #7bcfe8; /* Medium light blue */
+  --rsd-color-blue-400: #3fb8db; /* Medium blue */
+  --rsd-color-blue-500: #1c81a4; /* Base blue color (Visual Identity Manual) */
+  --rsd-color-blue-600: #145f7a; /* Dark blue for solid backgrounds and text */
+  --rsd-color-blue-700: #0d4157; /* Darker blue */
+  --rsd-color-blue-800: #072633; /* Darkest blue */
+  --rsd-color-gray-50: #f9fafa; /* Lightest gray tint for soft backgrounds */
+  --rsd-color-gray-100: #dce0e3; /* Very light gray */
+  --rsd-color-gray-200: #c5cacc; /* Light gray for soft variant backgrounds */
+  --rsd-color-gray-300: #9da5a7; /* Medium light gray */
+  --rsd-color-gray-400: #82898b; /* Medium gray */
+  --rsd-color-gray-500: #6a6e6e; /* Base gray color */
+  --rsd-color-gray-600: #4a4f50; /* Dark gray for solid backgrounds and text */
+  --rsd-color-gray-700: #313536; /* Darker gray */
+  --rsd-color-gray-800: #1f2121; /* Darkest gray */
+  --rsd-color-gray-900: #000000; /* Pure black. */
+  --rsd-color-gray-000: #ffffff; /* Pure white. */
+  --rsd-color-green-100: #e9f7e9; /* Lightest green tint for soft backgrounds */
+  --rsd-color-green-200: #c6e8c7; /* Light green for soft variant backgrounds */
+  --rsd-color-green-300: #96d498; /* Medium light green */
+  --rsd-color-green-400: #66c069; /* Medium green */
+  --rsd-color-green-500: #3cae3f; /* Base green color (Visual Identity Manual) */
+  --rsd-color-green-600: #237028; /* Dark green for solid backgrounds and text */
+  --rsd-color-green-700: #1f5d22; /* Darker green */
+  --rsd-color-green-800: #143a15; /* Darkest green */
+  --rsd-color-imagotype-light: #00babc; /* Light teal in imagotype (graphic element). */
+  --rsd-color-imagotype-dark: #058b8c; /* Dark teal in imagotype (for Observatory wordmark). */
+  --rsd-color-imagotype-black: #313333; /* Dark gray in imagotype. */
+  --rsd-color-imagotype-white: #f5f5f5; /* Imagotype white for dark backgrounds. */
+  --rsd-color-orange-100: #fceee0; /* Lightest orange tint for soft backgrounds */
+  --rsd-color-orange-200: #f7d5b2; /* Light orange for soft variant backgrounds */
+  --rsd-color-orange-300: #f0b976; /* Medium light orange */
+  --rsd-color-orange-400: #e8a356; /* Medium orange */
+  --rsd-color-orange-500: #e08d35; /* Base orange color (Visual Identity Manual) */
+  --rsd-color-orange-600: #8f4d0a; /* Dark orange for solid backgrounds and text */
+  --rsd-color-orange-700: #8b5016; /* Darker orange */
+  --rsd-color-orange-800: #5e350f; /* Darkest orange */
+  --rsd-color-primary-50: #fbfefe; /* Lightest teal tint for soft backgrounds */
+  --rsd-color-primary-100: #f5f5f5; /* Very light neutral for backgrounds */
+  --rsd-color-primary-200: #d9f7f6; /* Light teal tint */
+  --rsd-color-primary-300: #b1f2ef; /* Medium light teal */
+  --rsd-color-primary-400: #00babc; /* Base light teal from imagotype */
+  --rsd-color-primary-500: #009fa1; /* Medium teal */
+  --rsd-color-primary-600: #058b8c; /* Base dark teal from imagotype */
+  --rsd-color-primary-700: #0c4a47; /* Dark teal */
+  --rsd-color-primary-800: #313333; /* Darkest neutral from imagotype */
+  --rsd-color-primary-900: #0f1212; /* Darkest teal shade, near black */
+  --rsd-color-purple-100: #efe9f4; /* Lightest purple tint for soft backgrounds */
+  --rsd-color-purple-200: #d7c7e3; /* Light purple for soft variant backgrounds */
+  --rsd-color-purple-300: #b49cc8; /* Medium light purple */
+  --rsd-color-purple-400: #8e69a5; /* Medium purple */
+  --rsd-color-purple-500: #583671; /* Base purple color (Visual Identity Manual) */
+  --rsd-color-purple-600: #412756; /* Dark purple for solid backgrounds and text */
+  --rsd-color-purple-700: #2e1b3d; /* Darker purple */
+  --rsd-color-purple-800: #1d1126; /* Darkest purple */
+  --rsd-color-red-100: #fee9e9; /* Lightest red tint for soft backgrounds */
+  --rsd-color-red-200: #fcc7c7; /* Light red for soft variant backgrounds */
+  --rsd-color-red-300: #f99393; /* Medium light red */
+  --rsd-color-red-400: #f57070; /* Medium red */
+  --rsd-color-red-500: #ed4c4c; /* Base red color (Visual Identity Manual) */
+  --rsd-color-red-600: #ad1919; /* Dark red for solid backgrounds and text */
+  --rsd-color-red-700: #9d1b1b; /* Darker red */
+  --rsd-color-red-800: #6b1212; /* Darkest red */
+  --rsd-color-yellow-100: #fffaeb; /* Lightest yellow tint for soft backgrounds */
+  --rsd-color-yellow-200: #fff2c7; /* Light yellow for soft variant backgrounds */
+  --rsd-color-yellow-300: #ffe999; /* Medium light yellow */
+  --rsd-color-yellow-400: #ffe266; /* Medium yellow. Yellow from the Visual Identity Manual. */
+  --rsd-color-yellow-500: #ffdb33; /* Base yellow color */
+  --rsd-color-yellow-600: #806600; /* Dark yellow for solid backgrounds and text */
+  --rsd-color-yellow-700: #b39600; /* Darker yellow */
+  --rsd-color-yellow-800: #806d00; /* Darkest yellow */
+  --rsd-component-divider-color: #c5cacc; /* Border/divider color */
+  --rsd-component-footer-background-color: #f5f5f5;
+  --rsd-component-header-background-color: #1f2121; /* Header background color. */
+  --rsd-component-header-nav-text-color: #ffffff;
+  --rsd-component-header-nav-text-hover-color: #00babc;
+  --rsd-component-header-nav-menulist-text-color: #1f2121;
+  --rsd-component-header-nav-menulist-background-color: #ffffff;
+  --rsd-component-header-nav-menulist-selected-background-color: #058b8c;
+  --rsd-component-page-background-color: #ffffff; /* Page background color */
+  --rsd-component-service-card-background-color: #ffffff;
+  --rsd-component-service-card-text-color: #1f2121;
+  --rsd-component-surface-secondary-background-color: #dce0e3; /* Subtle surface background color */
+  --rsd-component-text-color: #1f2121; /* Body text color */
+  --rsd-component-text-secondary-color: #4a4f50; /* Muted/secondary text color */
+  --rsd-component-text-reverse-color: #dce0e3; /* Body text color in reversed (light on dark) contexts. */
+  --rsd-component-text-link-color: #146685;
+  --rsd-component-text-link-hover-color: #1c81a4;
+  --rsd-component-text-link-reverse-color: #7bcfe8; /* Link color in reversed (light on dark) contexts. */
+  --rsd-component-text-headline-color: #058b8c;
+}

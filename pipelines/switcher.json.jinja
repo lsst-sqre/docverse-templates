@@ -1,0 +1,77 @@
+{#- pydata-sphinx-theme version switcher for pipelines.lsst.io.
+
+    Entries, in order:
+
+    1. __main, labelled "Latest release" and marked preferred. It tracks
+       the newest final EUPS release (eups_release tracking mode).
+    2. The `weekly` and `daily` editions, which track the newest weekly
+       and daily tags; each is omitted when the project has no such edition.
+    3. Every numbered release (v30_0_12, v17_0, legacy 13-0, ...) in version
+       order, newest first, as editions.releases already sorts them.
+    4. The most recent weeklies, capped at weekly_limit.
+
+    Daily editions and drafts (release candidates, ticket branches) are
+    never listed: a switcher of several hundred dailies is unusable, and
+    both kinds expire.
+
+    Docverse validates the output as a JSON array of objects with string
+    name, version and url and an optional boolean preferred, then
+    re-serializes it, so the whole list is built as Jinja data and emitted
+    once with tojson. -#}
+{%- set weekly_limit = 4 -%}
+{%- set ns = namespace(entries=[], releases=[], weeklies=[]) -%}
+
+{%- if editions.main -%}
+  {%- set _ = ns.entries.append({
+    'name': 'Latest release',
+    'version': editions.main.slug,
+    'url': editions.main.published_url,
+    'preferred': true,
+  }) -%}
+{%- endif -%}
+
+{%- for slug, name in [('weekly', 'Latest weekly release'), ('daily', 'Latest daily release')] -%}
+  {%- set edition = editions.by_slug.get(slug) -%}
+  {%- if edition -%}
+    {%- set _ = ns.entries.append({
+      'name': name,
+      'version': edition.slug,
+      'url': edition.published_url,
+    }) -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{#- Split the releases list into numbered releases and weeklies. The weekly
+    and daily meta editions are release-kind too, but they are listed above
+    by name, and dailies (d_YYYY_MM_DD) are skipped. -#}
+{%- for edition in editions.releases -%}
+  {%- set prefix = edition.slug[:2] -%}
+  {%- if edition.slug in ('weekly', 'daily') -%}
+  {%- elif prefix in ('w_', 'w-') -%}
+    {%- set _ = ns.weeklies.append((edition.slug | replace('-', '_'), edition)) -%}
+  {%- elif prefix in ('d_', 'd-') -%}
+  {%- else -%}
+    {%- set _ = ns.releases.append(edition) -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- for edition in ns.releases -%}
+  {%- set _ = ns.entries.append({
+    'name': edition.title,
+    'version': edition.slug,
+    'url': edition.published_url,
+  }) -%}
+{%- endfor -%}
+
+{#- Weeklies order by their normalized slug (w_YYYY_WW is zero-padded, and
+    the legacy w-YYYY-WW form normalizes into the same shape), newest
+    first. -#}
+{%- for key, edition in (ns.weeklies | sort(attribute='0', reverse=true))[:weekly_limit] -%}
+  {%- set _ = ns.entries.append({
+    'name': edition.title,
+    'version': edition.slug,
+    'url': edition.published_url,
+  }) -%}
+{%- endfor -%}
+
+{{ ns.entries | tojson(indent=2) }}

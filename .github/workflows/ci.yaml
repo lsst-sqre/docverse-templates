@@ -37,3 +37,14 @@ jobs:
 
       - name: Verify committed rsd outputs match the installed package
         run: npm run check
+
+  render-templates:
+    name: Render template sets against the mock scenarios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.3.3
+
+      - name: Render every template set, scenario, and switcher
+        run: uv run dev/preview.py --check
